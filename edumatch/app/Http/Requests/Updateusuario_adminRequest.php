@@ -11,7 +11,7 @@ class Updateusuario_adminRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,25 @@ class Updateusuario_adminRequest extends FormRequest
      */
     public function rules(): array
     {
+        $usuarioAdminId = $this->route('usuario_admin')->id;
+
         return [
-            //
+            'nome' => 'sometimes|string|max:100',
+            'email' => 'sometimes|email|unique:usuario_admins,email,' . $usuarioAdminId,
+            'cargo' => 'sometimes|string|max:100',
+            'permissoes' => 'sometimes|string|max:244',
+            'escola' => 'sometimes|string|max:244',
+            'id_escola' => 'sometimes|integer',
+            'user_name' => 'sometimes|string|max:244|unique:usuario_admins,user_name,' . $usuarioAdminId,
+            'senha' => [
+                'nullable',
+                'string',
+                'min:6',
+                'regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+                'regex:/[@$!%*?&#.]/',
+            ],
         ];
     }
 }
