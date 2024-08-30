@@ -13,15 +13,8 @@ class UsuarioSuperAdminController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $usuariosSuperAdmins = usuario_super_admin::all();
+        return response()->json($usuariosSuperAdmins);
     }
 
     /**
@@ -29,38 +22,50 @@ class UsuarioSuperAdminController extends Controller
      */
     public function store(Storeusuario_super_adminRequest $request)
     {
-        //
+        // Remova o dd($request->all())
+        $usuarioSuperAdmin = usuario_super_admin::create($request->all());
+        return response()->json([
+            'message' => 'Cadastrado com sucesso',
+            'data' => $usuarioSuperAdmin
+        ], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(usuario_super_admin $usuario_super_admin)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(usuario_super_admin $usuario_super_admin)
-    {
-        //
-    }
+        $usuario_super_admin = usuario_super_admin::find($id);
+    
+        if (!$usuario_super_admin) {
+            return response()->json(['message' => 'Usuário super administrador não encontrado'], 404);
+        }
+    
+        return response()->json($usuario_super_admin);
+    }      
+    
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Updateusuario_super_adminRequest $request, usuario_super_admin $usuario_super_admin)
     {
-        //
+        // Atualiza os atributos do modelo com os dados fornecidos
+        $usuario_super_admin->update($request->all());
+    
+        return response()->json([
+            'message' => 'Atualizado com sucesso',
+            'data' => $usuario_super_admin
+        ], 200);
     }
+    
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(usuario_super_admin $usuario_super_admin)
     {
-        //
+        $usuario_super_admin->delete();
+        return response()->json(['message' => 'Usuário super administrador excluído com sucesso'], 200);
     }
 }

@@ -22,6 +22,8 @@ class UsuarioAdminController extends Controller
      */
     public function store(Storeusuario_adminRequest $request)
     {
+        \Log::info('Dados recebidos na requisição: ' . json_encode($request->all()));
+
         $usuarioAdmin = usuario_admin::create($request->all());
         return response()->json([
             'message' => 'Cadastrado com sucesso',

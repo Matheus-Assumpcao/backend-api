@@ -22,7 +22,22 @@ class Storeusuario_super_adminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nome' => 'required|string|max:100',
+            'cnpj' => 'required|string|max:100',
+            'email' => 'required|email|unique:usuario_super_admins,email',
+            'site' => 'required|string|max:244',
+            'localizacao' => 'required|string|max:244',
+            'qtd_usuarios' => 'required|integer',
+            'qtd_usuarios_admins' => 'required|integer',
+            'senha' => [
+                'required',
+                'string',
+                'min:6', // Mínimo de 6 caracteres
+                'regex:/[a-z]/', // Pelo menos uma letra minúscula
+                'regex:/[A-Z]/', // Pelo menos uma letra maiúscula
+                'regex:/[0-9]/', // Pelo menos um número
+                'regex:/[@$!%*?&#.]/', // Pelo menos um caractere especial
+            ],
         ];
     }
 }

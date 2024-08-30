@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('localizacao', 244);
             $table->unsignedBigInteger('qtd_usuarios');
             $table->unsignedBigInteger('qtd_usuarios_admins');
+            $table->string('senha', 100);
             $table->timestamps();
         });
     }
